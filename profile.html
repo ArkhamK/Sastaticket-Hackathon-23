@@ -23,7 +23,38 @@
 
 </head>
 
-  <body>
+<script>
+    function performOCR() {
+        const apiKey = 'K87519605388957';
+        const fileInput = document.getElementById('uploadFile');
+        const file = fileInput.files[0];
+
+        const formData = new FormData();
+        formData.append('apikey', apiKey);
+        formData.append('file', file);
+
+        fetch('https://api.ocr.space/parse/image', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const recognizedText = data.ParsedResults[0].ParsedText;
+                document.getElementById('result').innerText = recognizedText;
+
+                // Set the OCR result to the "Full Name" input field
+                document.getElementById('resultName').value = recognizedText;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+</script>
+
+
+
+
+<body>
 
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
@@ -32,57 +63,154 @@
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
-
     <!-- Header -->
     <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>09 <em>Travels</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home
-                      <span class="sr-only">(current)</span>
-                    </a>
-                </li> 
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"><h2>09 <em>Travels</em></h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
 
-                <li class="nav-item"><a class="nav-link" href="locList.html">Locations</a></li>
-                <li class="nav-item"><a class="nav-link" href="ecom.html">Store</a></li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="locList.html">Locations</a>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="ecom.html">Store</a></li>
 
 
-                <li class="nav-item dropdown ">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-                    
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item " href="about-us.html">About Us</a>
-                      <a class="dropdown-item " href="news.html">News</a>
-                      <a class="dropdown-item " href="contact.html">Contact Us</a>
-                    </div>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
 
-                    <li class="nav-item active"><a class="nav-link" href="profile.html">Profile</a></li>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="about-us.html">About Us</a>
+                                <a class="dropdown-item " href="news.html">Reviews</a>
+                                <a class="dropdown-item " href="contact.html">Contact Us</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
 
-            </ul>
-          </div>
-        </div>
-      </nav>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <footer>
-      <div class="container">
+
+    <div class="container">
         <div class="row">
-          <div class="col-md-12">
-              <div class="inner-content">
-                  <p>Developed by: <a href="https://linktr.ee/gdscduet">Team September</a></p>
-              </div>
-          </div>
+            <div class="col-md-12">
+                <br><br><br><br>
+                <div class="section-heading">
+                    <h2>Profile Details</h2>
+                </div>
+            </div>
+
+            <div class="left-content">
+
+                <ul>
+                    <li><h5>Name</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="name" type="text" class="form-control" id="resultName" placeholder="Full Name" required="">
+                </fieldset>
+
+                <br>
+
+                <ul>
+                    <li><h5>Father Name</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="fname" type="text" class="form-control" id="fname" placeholder="Full Name" required="">
+                </fieldset>
+
+                <br>
+
+                <ul>
+                    <li><h5>Gender</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="gender" type="text" class="form-control" id="gender" placeholder="Male / Female / Other" required="">
+                </fieldset>
+
+                <br>
+
+                <ul>
+                    <li><h5>ID Number</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="IDn" type="text" class="form-control" id="IDn" placeholder="xxxxx-xxxxxxxx-x" required="">
+                </fieldset>
+
+                <br>
+
+                <ul>
+                    <li><h5>Date of Birth</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="DOB" type="text" class="form-control" id="DOB" placeholder="xx.xx.xxxx" required="">
+                </fieldset>
+
+                <br>
+
+                <ul>
+                    <li><h5>Interests/Tags</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="InT" type="text" class="form-control" id="InT" placeholder="Separate by commas" required="">
+                </fieldset>
+
+                <br>
+
+                <fieldset>
+                    <input type="file" id="uploadFile">
+                    <input type="button" id="ocrbutton" onclick="performOCR()" value="Perform OCR" />
+                    <div id="result">
+                        <p>Please copy the result when it is shown and paste it accordingly.</p>
+                    </div>
+                </fieldset>
+
+                <ul>
+                    <li><h5>Visas currently holding</h5></li>
+                </ul>
+                <fieldset>
+                    <input name="Vch" type="text" class="form-control" id="Vch" placeholder="Separate by commas" required="">
+                </fieldset>
+
+
+                <br>
+                <fieldset>
+                    <input type="submit" id="form-submit" class="filled-button" value="Save">
+                </fieldset>
+
+
+
+
+            </div>
         </div>
-      </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="inner-content">
+                        <p>Developed by: <a href="https://linktr.ee/gdscduet">Team September</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
 
 
@@ -94,6 +222,6 @@
     <!-- Additional Scripts -->
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/owl.js"></script>
-  </body>
+</body>
 
 </html>
