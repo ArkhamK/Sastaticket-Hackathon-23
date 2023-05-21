@@ -42,8 +42,46 @@
                 const recognizedText = data.ParsedResults[0].ParsedText;
                 document.getElementById('result').innerText = recognizedText;
 
-                // Set the OCR result to the "Full Name" input field
-                document.getElementById('resultName').value = recognizedText;
+                // Extract the third line from the OCR output
+                const lines = recognizedText.split('\n');
+                const fullName = lines[2]; // Third line is at index 2
+
+                // Set the extracted name to the "Full Name" input field
+                document.getElementById('resultName').value = fullName.trim();
+
+                const fname = lines[4]; // Third line is at index 2
+
+                // Set the extracted name to the "Full Name" input field
+                document.getElementById('fname').value = fname.trim();
+
+                // Extract the date of birth from the OCR output
+                /*const dobLine = recognizedText.match(/Date of Birth\s+(.*)/i);
+                let dob = '';
+
+                if (dobLine) {
+                    dob = dobLine[1].match(/\d{2}\.\d{2}\.\d{4}/)[0];
+                }*/
+
+
+                // Extract the gender from the OCR output
+                const genderLine = recognizedText.match(/Gender\s+([\w\s,]+)/i);
+                let gender = '';
+
+                if (genderLine) {
+                    const genderText = genderLine[1].replace(/Country|[^a-zA-Z\s]/g, '').trim();
+
+                    if (genderText.includes('M')) {
+                        gender = 'M';
+                    }
+                }
+                // Set the gender value
+                document.getElementById('gender').value = gender;
+
+                // Set the date of birth value
+                //document.getElementById('dob').value = dob;
+
+
+
             })
             .catch((error) => {
                 console.error(error);
@@ -158,7 +196,7 @@
                     <li><h5>Date of Birth</h5></li>
                 </ul>
                 <fieldset>
-                    <input name="DOB" type="text" class="form-control" id="DOB" placeholder="xx.xx.xxxx" required="">
+                    <input name="dob" type="text" class="form-control" id="dob" placeholder="xx.xx.xxxx" required="">
                 </fieldset>
 
                 <br>
@@ -180,6 +218,7 @@
                     </div>
                 </fieldset>
 
+                <br>
                 <ul>
                     <li><h5>Visas currently holding</h5></li>
                 </ul>
