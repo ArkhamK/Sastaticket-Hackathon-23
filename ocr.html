@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OCR.space API Integration</title>
+  <script>
+    function performOCR() {
+      const apiKey = 'K87519605388957';
+      const fileInput = document.getElementById('uploadFile');
+      const file = fileInput.files[0];
+
+      const formData = new FormData();
+      formData.append('apikey', apiKey);
+      formData.append('file', file);
+
+      fetch('https://api.ocr.space/parse/image', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const recognizedText = data.ParsedResults[0].ParsedText;
+          document.getElementById('result').innerText = recognizedText;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  </script>
+</head>
+<body>
+  <h1>OCR.space API Integration</h1>
+  <input type="file" id="uploadFile">
+  <button onclick="performOCR()">Perform OCR</button>
+  <div id="result"></div>
+</body>
+</html>
